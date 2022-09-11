@@ -1,0 +1,9 @@
+.card-top{
+    min-height: 800px;
+    background-color: violet;
+}
+
+.card-bottom{
+    min-height: 800px;
+    background-color: greenyellow;
+}
