@@ -32,7 +32,7 @@ export default class Navbar extends Component {
                 </div>
             </li>
             <li className="nav-item">
-                <a className="nav-link disabled" href="/" tabindex="-1" aria-disabled="true">Disabled</a>
+                <a className="nav-link disabled" href="/" tabIndex="-1" aria-disabled="true">Disabled</a>
             </li>
             </ul>
             <form className="form-inline my-2 my-lg-0">

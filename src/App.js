@@ -9,6 +9,8 @@ function App() {
   return (
     <>
       <Navbar/>
+      <div style={{minHeight : 60}}>
+      </div>
       <Cart/>
       <Footer/>
     </>

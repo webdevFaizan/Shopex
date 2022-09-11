@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import './cart.css'
+import CartItem from './CartItem'
 
 export default class Cart extends Component {
   render() {
     return (
       <>
-        <div className='card-top'>
-            <h1>Cart Top section</h1>
-        </div>
-        <div className='card-bottom'>
-        <h1>Cart Bottom section</h1>
-        </div>
+        <CartItem title ={"iPhone"} img={"https://cdn-icons-png.flaticon.com/512/186/186239.png"} />
+        <CartItem title ={"iPhone"} img={"https://cdn-icons-png.flaticon.com/512/186/186239.png"} />
+        <CartItem title ={"iPhone"} img={"https://cdn-icons-png.flaticon.com/512/186/186239.png"} />
       </>
     )
   }
