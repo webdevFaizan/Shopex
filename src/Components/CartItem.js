@@ -24,15 +24,16 @@ export default class CartItem extends Component {
             </div>
             <div className="right-block">
             <div style={ { fontSize: 25 } }>{product.title}</div>
-            <div style={ { color: '#777' } }>Price for one Item {product.price} </div>
-            <div style={ { color: '#777' } }>Rs {product.totalCost} </div>
-            <div style={ { color: '#777' } }>Qty: {product.qty} </div>
+            <div style={ { color: '#777' } }>Price for one Item : {product.price} </div>
+            <div style={ { color: '#777' } }>Total Cost : {product.totalCost} </div>
+            <div style={ { color: '#777' } }>Qty : {product.qty} </div>
             <div className="cart-item-actions">
                 {/* Buttons */}
                 <img
                 alt="increase"
                 className="action-icons"
-                width={30}                
+                width={30}       
+                style={{margin : 15}}         
                 src="https://cdn-icons-png.flaticon.com/512/3416/3416075.png"
                 onClick={()=>{this.props.increaseQuantity(product)}}
                 // This we have read already, arrow function will be used in the case when the props function is to be called with a parameter. If there is no parameter then this could have been called directly.
@@ -41,6 +42,7 @@ export default class CartItem extends Component {
                 alt="decrease"
                 className="action-icons"
                 width={30}
+                style={{margin : 15}}      
                 src="https://cdn-icons-png.flaticon.com/512/3249/3249894.png"
                 onClick={()=>{this.props.decreaseQuantity(product)}}
                 />
@@ -49,6 +51,7 @@ export default class CartItem extends Component {
                 className="action-icons"
                 width={50}
                 src="https://cdn-icons-png.flaticon.com/512/3096/3096687.png"
+                onClick={()=>{this.props.deleteProduct(product)}}
                 />
             </div>
             </div>

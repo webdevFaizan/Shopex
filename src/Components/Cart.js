@@ -63,10 +63,10 @@ export default class Cart extends Component {
     }
 
     decreaseQuantity=(product)=>{
+        const {products} = this.state;
+        let index = products.indexOf(product);
         if(products[index].qty>=1)
         {
-            const {products} = this.state;
-            let index = products.indexOf(product);
             products[index].qty-=1;
             products[index].totalCost-=products[index].price;
             this.setState({
@@ -75,14 +75,24 @@ export default class Cart extends Component {
         }
     }
 
+    deleteProduct = (product)=>{
+        console.log('inside delete')
+        const {products} = this.state;
+        let index = products.indexOf(product);
+        products.splice(index,1);
+        this.setState({
+            products
+        })
+    }
+
   render() {
     
     return (
       <>
-        <div style={{display : 'flex', flexDirection : 'row'}}>            
+        <div style={{display : 'flex', flexDirection : 'row', flexWrap : 'wrap', justifyContent : 'space-between'}}>            
             {                
                 this.state.products.map((element)=>{
-                    return <CartItem key={element.id} product={element} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity}/>
+                    return <CartItem key={element.id} product={element} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct}/>
                 })                
             }            
         </div>
