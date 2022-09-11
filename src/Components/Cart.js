@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import './cart.css'
 import CartItem from './CartItem'
 
-export default class Cart extends Component {
-
-    
+export default class Cart extends Component {    
 
     constructor(){
         super();
-        this.state = {
+        this.state = {          //IMPORTANT : All the states are being managed in one single parent itself, and this.state is always an object, inside this we could contain an array of objects named products. And change we wish to make, will be done by finding the index of the product variable and then changing the states of this products array itself, instead of individually adding the state variable inside the CartItem.js, although reasearch which method is more preferrable in react??
             products : [
                 {
                     title : 'iPhone',
@@ -16,7 +14,7 @@ export default class Cart extends Component {
                     totalCost : 5000,
                     qty : 1,
                     img : 'https://img.icons8.com/emoji/344/mobile-phone.png',
-                    id : 0
+                    id : 0      //Although we did not use the id of each element, but it is a good idea to provide id for each element, so that there would be a unique identifier for each and every product in the products array.
                 },
                 {
                     title : 'Laptop',
@@ -55,20 +53,20 @@ export default class Cart extends Component {
     }
 
     increaseQuantity=(product)=>{
-        const {products} = this.state;
+        const {products} = this.state;      //Here we are simply creating a local products variable so that it could be used in the following lines, calling this.state.products[index] feels tiresome.
         let index = products.indexOf(product);
-        products[index].qty+=1;
+        products[index].qty+=1;     //This is a local variable being created and updated, and when this array is passed in the setState method only this the state will get updated, before that the State will remain unchanged.
         products[index].totalCost+=products[index].price;
         this.setState({
-            products : products
+            products : products     //We could have used the short hand property of react as well, when the name of variables on both side is the same, then we do not need to write the right side variable, and still there will be no error.
         })
     }
 
     decreaseQuantity=(product)=>{
-        const {products} = this.state;
-        let index = products.indexOf(product);
         if(products[index].qty>=1)
         {
+            const {products} = this.state;
+            let index = products.indexOf(product);
             products[index].qty-=1;
             products[index].totalCost-=products[index].price;
             this.setState({

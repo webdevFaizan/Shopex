@@ -35,6 +35,7 @@ export default class CartItem extends Component {
                 width={30}                
                 src="https://cdn-icons-png.flaticon.com/512/3416/3416075.png"
                 onClick={()=>{this.props.increaseQuantity(product)}}
+                // This we have read already, arrow function will be used in the case when the props function is to be called with a parameter. If there is no parameter then this could have been called directly.
                 />
                 <img
                 alt="decrease"
