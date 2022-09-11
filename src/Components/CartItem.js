@@ -3,41 +3,10 @@ import React, { Component } from 'react'
 
 
 export default class CartItem extends Component {
-    constructor(){
-        super();
-        this.state = {
-            price: 1,            
-            qty: 1
-        }
-        this.increaseQuantity = this.increaseQuantity.bind(this);
-        
-    }
-    componentDidMount(){
-        this.setState({
-            price : this.props.price
-        })
-    }
-
-    increaseQuantity(){
-        this.setState({
-            qty : this.state.qty+1,
-            price : (this.state.qty+1)*this.props.price
-        })
-    }
-
-    decreaseQuantity=()=>{
-        if(this.state.qty>=1)
-        {
-            this.setState({
-                qty : this.state.qty-1,
-                price : (this.state.qty-1)*this.props.price
-            })
-        }
-    }
-
+    
 
   render() {
-    const {price, qty} = this.state;
+    const { product} = this.props;
     const styles = {
         image: {
           height: 110,
@@ -51,13 +20,13 @@ export default class CartItem extends Component {
       <>
         <div className="cart-item" style={{display : 'flex', flexDirection : 'row', padding : 20, margin: 20}}>            
             <div className="left-block" style={{padding : 20}}>
-                <img src={this.props.img} style={styles.image} alt="..."/>
+                <img src={product.img} style={styles.image} alt="..."/>
             </div>
             <div className="right-block">
-            <div style={ { fontSize: 25 } }>{this.props.title}</div>
-            <div style={ { color: '#777' } }>Price for one Item {this.props.price} </div>
-            <div style={ { color: '#777' } }>Rs {price} </div>
-            <div style={ { color: '#777' } }>Qty: {qty} </div>
+            <div style={ { fontSize: 25 } }>{product.title}</div>
+            <div style={ { color: '#777' } }>Price for one Item {product.price} </div>
+            <div style={ { color: '#777' } }>Rs {product.totalCost} </div>
+            <div style={ { color: '#777' } }>Qty: {product.qty} </div>
             <div className="cart-item-actions">
                 {/* Buttons */}
                 <img
@@ -65,14 +34,14 @@ export default class CartItem extends Component {
                 className="action-icons"
                 width={30}                
                 src="https://cdn-icons-png.flaticon.com/512/3416/3416075.png"
-                onClick={this.increaseQuantity}
+                onClick={()=>{this.props.increaseQuantity(product)}}
                 />
                 <img
                 alt="decrease"
                 className="action-icons"
                 width={30}
                 src="https://cdn-icons-png.flaticon.com/512/3249/3249894.png"
-                onClick={this.decreaseQuantity}
+                onClick={()=>{this.props.decreaseQuantity(product)}}
                 />
                 <img
                 alt="delete"
