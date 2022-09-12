@@ -150,14 +150,19 @@ export default class Cart extends Component {
     
     return (
       <>
-        <div style={{display : 'flex', flexDirection : 'row', flexWrap : 'wrap', justifyContent : 'space-between'}}>            
-            {                
-                this.state.products.map((element)=>{
-                    return <CartItem key={element.id} product={element} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct}/>
-                })                
-            }            
+        <div className="contianer" style={{display : 'flex',alignItems: 'center', justifyContent: 'center'}}> 
+            <div style={{maxWidth: '70%',display : 'flex', flexDirection : 'row', flexWrap : 'wrap',alignItems: 'center',border:"0px solid red"}}>
+                {                
+                    this.state.products.map((element)=>{
+                        return <CartItem key={element.id} product={element} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct}/>
+                    })                
+                }            
+            </div>
         </div>
       </>
     )
   }
 }
+
+
+

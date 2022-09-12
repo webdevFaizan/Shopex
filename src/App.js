@@ -24,6 +24,7 @@ function App() {
       </div>
       <Cart trackTotalCounts={trackTotalCounts} trackTotalCost={trackTotalCost}/>
       <Footer/>
+      
     </>
   );
 }
