@@ -47,7 +47,39 @@ export default class Cart extends Component {
                     qty : 1,
                     img : 'https://cdn-icons-png.flaticon.com/512/855/855279.png',
                     id : 4
-                }
+                },
+                {
+                    title : 'Mjolnir Key Ring',
+                    price : 234,
+                    totalCost : 234,
+                    qty : 1,
+                    img : 'https://cdn-icons-png.flaticon.com/512/1396/1396645.png',
+                    id : 5
+                },
+                {
+                    title : 'Bottle pack combo',
+                    price : 230,
+                    totalCost : 230,
+                    qty : 1,
+                    img : 'https://cdn-icons-png.flaticon.com/512/3239/3239567.png',
+                    id : 6
+                },
+                {
+                    title : 'Perfume Bottle',
+                    price : 100,
+                    totalCost : 100,
+                    qty : 1,
+                    img : 'https://cdn-icons-png.flaticon.com/512/3365/3365786.png',
+                    id : 7
+                },          
+                {
+                    title : 'Earphone',
+                    price : 700,
+                    totalCost : 700,
+                    qty : 1,
+                    img : 'https://cdn-icons-png.flaticon.com/512/3791/3791461.png',
+                    id : 8
+                }                
             ]
         }
     }
