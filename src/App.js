@@ -13,12 +13,16 @@ function App() {
   function trackTotalCounts(number){    
     setTotalItems(number);
   }
+  const [totalCost, setTotalCost] = useState(0);
+  function trackTotalCost(number){    
+    setTotalCost(number);
+  }
   return (
     <>
-      <Navbar totalItems={totalItems}/>
+      <Navbar totalItems={totalItems} totalCost={totalCost}/>
       <div style={{minHeight : 60}}>
       </div>
-      <Cart trackTotalCounts={trackTotalCounts}/>
+      <Cart trackTotalCounts={trackTotalCounts} trackTotalCost={trackTotalCost}/>
       <Footer/>
     </>
   );
