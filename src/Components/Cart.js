@@ -1,88 +1,31 @@
 import React, { Component } from 'react'
 import './cart.css'
 import CartItem from './CartItem'
+import { collection, getDocs } from "firebase/firestore"; 
+import db from '../firebase-config'
 
 export default class Cart extends Component {    
 
     constructor(){
         super();
         this.state = {          //IMPORTANT : All the states are being managed in one single parent itself, and this.state is always an object, inside this we could contain an array of objects named products. And change we wish to make, will be done by finding the index of the product variable and then changing the states of this products array itself, instead of individually adding the state variable inside the CartItem.js, although reasearch which method is more preferrable in react??
-            products : [
-                {
-                    title : 'iPhone',
-                    price : 5000,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://img.icons8.com/emoji/344/mobile-phone.png',
-                    id : 0      //Although we did not use the id of each element, but it is a good idea to provide id for each element, so that there would be a unique identifier for each and every product in the products array.
-                },
-                {
-                    title : 'Laptop',
-                    price : 20000,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://img.icons8.com/fluency/344/mac-book-pro-m1.png',
-                    id : 1
-                },
-                {
-                    title : 'Sofa',
-                    price : 6750,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://img.icons8.com/external-flaticons-lineal-color-flat-icons/344/external-sofa-comfort-flaticons-lineal-color-flat-icons-3.png',
-                    id : 2
-                },
-                {
-                    title : 'Speaker',
-                    price : 3484,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://cdn-icons-png.flaticon.com/512/2061/2061136.png',
-                    id : 3
-                },
-                {
-                    title : 'Wallet',
-                    price : 734,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://cdn-icons-png.flaticon.com/512/855/855279.png',
-                    id : 4
-                },
-                {
-                    title : 'Mjolnir Key Ring',
-                    price : 234,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://cdn-icons-png.flaticon.com/512/1396/1396645.png',
-                    id : 5
-                },
-                {
-                    title : 'Bottle pack combo',
-                    price : 230,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://cdn-icons-png.flaticon.com/512/3239/3239567.png',
-                    id : 6
-                },
-                {
-                    title : 'Perfume Bottle',
-                    price : 100,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://cdn-icons-png.flaticon.com/512/3365/3365786.png',
-                    id : 7
-                },          
-                {
-                    title : 'Earphone',
-                    price : 700,
-                    totalCost : 0,
-                    qty : 0,
-                    img : 'https://cdn-icons-png.flaticon.com/512/3791/3791461.png',
-                    id : 8
-                }                
-            ]
+            products : [ ]
         }
     }
+
+    async componentDidMount(){        
+        const querySnapshot = await getDocs(collection(db, "productsOnWebsite"));
+        let arr=[];
+        querySnapshot.forEach((doc) => {
+            let temp = [];
+            temp=doc.data();
+            temp['id'] = doc.id;
+            arr.push(temp);
+        });
+        this.setState({
+            products : arr
+        })
+    }         
 
     trackTotal(){
         let sum=0;
@@ -96,10 +39,6 @@ export default class Cart extends Component {
         return sum;
     }
 
-    componentDidMount(){
-        let sum =this.trackTotal();
-        console.log(sum);
-    }
 
     increaseQuantity=(product)=>{
         const {products} = this.state;      //Here we are simply creating a local products variable so that it could be used in the following lines, calling this.state.products[index] feels tiresome.
