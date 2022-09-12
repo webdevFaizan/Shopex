@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import './cart.css'
 import CartItem from './CartItem'
 import { collection, getDocs } from "firebase/firestore"; 
-import db from '../firebase-config'
+import db from '../firebase-config'     //The firebase config was done in its own separate file, so that we could import the db, this import and export is not available in fire base docs, but once you import anything from any file all the modules required for that import is already completed when that file is run, this is how the import statement would work.
 
-export default class Cart extends Component {    
-
+export default class Cart extends Component{
     constructor(){
         super();
         this.state = {          //IMPORTANT : All the states are being managed in one single parent itself, and this.state is always an object, inside this we could contain an array of objects named products. And change we wish to make, will be done by finding the index of the product variable and then changing the states of this products array itself, instead of individually adding the state variable inside the CartItem.js, although reasearch which method is more preferrable in react??
@@ -13,7 +12,8 @@ export default class Cart extends Component {
         }
     }
 
-    async componentDidMount(){        
+    async componentDidMount(){
+        // The basic configuration of the firebase-db was done only by using the firebase docs, I researched about reading data from firebase db, and integrated the code line by line, and this is the working code, without any error. I will not remember this though, but I do not need to remember just need to read the documentation again.
         const querySnapshot = await getDocs(collection(db, "productsOnWebsite"));
         let arr=[];
         querySnapshot.forEach((doc) => {
