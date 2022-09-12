@@ -84,6 +84,18 @@ export default class Cart extends Component {
         }
     }
 
+    trackTotal(){
+        let sum=0;
+        this.state.products.forEach((element)=>sum+=element.qty);
+        this.props.trackTotalCounts(sum);
+        return sum;
+    }
+
+    componentDidMount(){
+        let sum =this.trackTotal();
+        console.log(sum);
+    }
+
     increaseQuantity=(product)=>{
         const {products} = this.state;      //Here we are simply creating a local products variable so that it could be used in the following lines, calling this.state.products[index] feels tiresome.
         let index = products.indexOf(product);
@@ -91,6 +103,10 @@ export default class Cart extends Component {
         products[index].totalCost+=products[index].price;
         this.setState({
             products : products     //We could have used the short hand property of react as well, when the name of variables on both side is the same, then we do not need to write the right side variable, and still there will be no error.
+        },()=>{
+            let sum =this.trackTotal();
+            console.log(sum);
+            // this.props.trackTotalCounts(number);
         })
     }
 
@@ -103,6 +119,10 @@ export default class Cart extends Component {
             products[index].totalCost-=products[index].price;
             this.setState({
                 products : products
+            },()=>{                
+                let sum =this.trackTotal();
+                console.log(sum);                
+                // this.props.trackTotalCounts(number);
             })
         }
     }
@@ -114,6 +134,10 @@ export default class Cart extends Component {
         products.splice(index,1);
         this.setState({
             products
+        },()=>{                
+            let sum =this.trackTotal();
+            console.log(sum);                
+            // this.props.trackTotalCounts(number);
         })
     }
 
