@@ -17,16 +17,23 @@ export default class Navbar extends Component{
   render() {
     return (
       <>
-      <div className='' style={{display : 'flex', justifyContent : 'space-between',color : 'white', backgroundColor : 'black'}}>
+      <div className='' style={{position: 'fixed', width : '100%', display : 'flex', justifyContent : 'space-between',color : 'white', backgroundColor : 'black'}}>
         {/* <nav className="navbar navbar-expand-lg navbar-dark bg-dark"> */}
         
           <div className="" style={{paddingTop : 8,paddingLeft : 18, alignItems: 'center',justifyContent: 'center', fontSize : 20}}>
               Shopex
           </div>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent : 'center'}}>
-            <div className="btn btn-primary" onClick={ ()=>this.props.showAddItemForm() } style={{marginRight : 20}}>Add items</div>
+            <div className="btn btn-light" onClick={ ()=>this.props.showAddItemForm() } style={{marginRight : 20}}>
+              {
+                !this.props.addingItemsOnWebsite && "Add items"
+              }
+              {
+                this.props.addingItemsOnWebsite && "X Close"
+              }
+            </div>
             <div className="freeSpace" style={{minWidth : 30, border: '0px solid red'}}>
-                Total - {this.props.totalCost}
+                Total Rs - {this.props.totalCost}
             </div>
             <div className="cartInNavbar position-relative" style={{padding : 5,display: 'flex', flexDirection: 'row',position : 'relative'}}>            
               <img src="https://cdn-icons-png.flaticon.com/512/8081/8081347.png" style={{height : 40}} alt="..." />

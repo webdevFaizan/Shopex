@@ -27,7 +27,7 @@ export default class App extends React.Component{
       db.collection("productsOnWebsite")
       // .where('queryCondition')   //IMPORTANT- I have explained this in the CN React.docs file
       // .orderBy('sortingTechnique')
-          .orderBy('created', 'desc')
+          .orderBy('created', 'desc')     //This orderBy method will sort the whole list of items, but if some document has 'create' field missing then it will just remove that from the UI.
           .onSnapshot((querySnapshot) => {      //This is the web version 8 code. Earlier I was using web version 9 code, it was having slight trouble.
           // Also note that we have removed the .get() method, which was simply a one sided communication tool, when the client requested only then the db data will be fetched, but now it is behaving just like a websocket, where if the db has been altered anyhow, this will be automatically reflected in the front end of each and every client.
           let arr=[];     //Array will be created for each change in the db, but in the setState method only those element will be updated, which are changed acutally.
@@ -201,7 +201,7 @@ export default class App extends React.Component{
   render(){
     return (
       <>
-        <Navbar totalItems={this.state.totalItems} totalCost={this.state.totalCost} showAddItemForm={this.addItemForm}/>
+        <Navbar totalItems={this.state.totalItems} totalCost={this.state.totalCost} showAddItemForm={this.addItemForm} addingItemsOnWebsite= {this.state.addingItemsOnWebsite}/>
         <div style={{minHeight : 60}}>
         </div>
         <Cart loading={this.state.loading} products={this.state.products} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct} addingItemsOnWebsite={this.state.addingItemsOnWebsite} addItems={this.addItems}/>

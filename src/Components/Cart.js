@@ -16,7 +16,7 @@ export default class Cart extends Component{
         let price =parseInt(form.elements['price'].value);
         let qty= parseInt(form.elements['qty'].value);
         let img = form.elements['img'].value;
-        let createdTime = +new Date();
+        let createdTime = +new Date();          //This is a shortcut to render the time in milliseconds, and this is being rendered on the client side and then added to the data base. So that we will have the items that were added at the last position appearing at the top position.
 
         // console.log(title, price, qty, img)
 
