@@ -20,7 +20,7 @@ export default class Cart extends Component{
                 }            
             </div>
         </div>
-                <div className="btn btn-primary">Add items</div>
+                
                 <div className="freeSpace" style={{minHeight : 150}}></div>
       </>
     )

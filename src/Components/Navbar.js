@@ -2,6 +2,34 @@ import React, { Component } from 'react'
 import './navbar.css'
 
 export default class Navbar extends Component {
+
+   generateString(length) {
+    let result = ' ';
+    const charactersLength = 26;
+    for ( let i = 0; i < length; i++ ) {
+        result += result.charAt(Math.floor(Math.random() * charactersLength)+97);
+    }
+
+    return result;
+  }
+
+
+  createItemAndAdd(){
+    // const str= this.generateString(10);
+    const str = Math.random().toString(36).substring(2,10);
+    const obj={
+        title : 'Leviathan Axe',
+        price : 1230,
+        totalCost : 0,
+        qty : 0,
+        img : 'https://cdn-icons-png.flaticon.com/512/2208/2208228.png',
+        id : str  
+      }
+      // console.log(str);
+
+    this.props.addItems(obj);
+  }
+
   render() {
     return (
       <>
@@ -12,6 +40,7 @@ export default class Navbar extends Component {
               Shopex
           </div>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent : 'center'}}>
+            <div className="btn btn-primary" onClick={()=>{this.createItemAndAdd()}} style={{marginRight : 20}}>Add items</div>
             <div className="freeSpace" style={{minWidth : 30, border: '0px solid red'}}>
                 Total - {this.props.totalCost}
             </div>

@@ -54,6 +54,7 @@ export default class App extends React.Component{
         totalItems : sum,
         totalCost : costs
       })
+      return sum;
   }
 
 
@@ -103,8 +104,7 @@ export default class App extends React.Component{
   }
 
 
-
-
+// The following were the state objects when this component used to be a function based component, but we have changed it to the class based component, but kept this as souvenier and not deleted it.
   // const [totalItems, setTotalItems] = useState(0);
   // function trackTotalCounts(number){    
   //   setTotalItems(number);
@@ -115,10 +115,22 @@ export default class App extends React.Component{
   // }
 
 
+  addItems=(obj)=>{
+    db.collection("productsOnWebsite").doc(obj.id)
+    .set(obj)
+    .then(() => {
+        console.log("Document successfully written!");
+    })
+    .catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+  }
+
+
   render(){
     return (
       <>
-        <Navbar totalItems={this.state.totalItems} totalCost={this.state.totalCost}/>
+        <Navbar totalItems={this.state.totalItems} totalCost={this.state.totalCost} addItems={this.addItems}/>
         <div style={{minHeight : 60}}>
         </div>
         <Cart loading={this.state.loading} products={this.state.products} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct}/>
