@@ -16,7 +16,8 @@ export default class App extends React.Component{
         products : [ ],
         loading :true,
         totalItems : 0,
-        totalCost : 0
+        totalCost : 0,
+        addingItemsOnWebsite : false
     }
   }
 
@@ -39,7 +40,8 @@ export default class App extends React.Component{
           console.log(arr);
           this.setState({
               products : arr,
-              loading : false
+              loading : false,
+              addingItemsOnWebsite : false
           },()=>{
               this.trackTotal();      //This is to be added inside the second argument of the setState, if we want to see the change in state as soon it is updated. If we keep this method outside the setState's second parameter, then this will give the old state and not the new one.
           })
@@ -180,14 +182,28 @@ export default class App extends React.Component{
     });
   }
 
+  addItemForm=()=>{
+    console.log('inside addItemForm');
+    if(this.state.addingItemsOnWebsite===true){
+        this.setState({
+          addingItemsOnWebsite : false
+        })
+    }
+    else if (this.state.addingItemsOnWebsite===false){
+      this.setState({
+        addingItemsOnWebsite : true
+      })
+    }
+  }
+
 
   render(){
     return (
       <>
-        <Navbar totalItems={this.state.totalItems} totalCost={this.state.totalCost} addItems={this.addItems}/>
+        <Navbar totalItems={this.state.totalItems} totalCost={this.state.totalCost} showAddItemForm={this.addItemForm}/>
         <div style={{minHeight : 60}}>
         </div>
-        <Cart loading={this.state.loading} products={this.state.products} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct}/>
+        <Cart loading={this.state.loading} products={this.state.products} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct} addingItemsOnWebsite={this.state.addingItemsOnWebsite} addItems={this.addItems}/>
         <Footer/>
         
       </>
