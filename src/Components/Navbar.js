@@ -42,7 +42,7 @@ export default class Navbar extends Component{
                 Total - {this.props.totalCost}
             </div>
             <div className="cartInNavbar position-relative" style={{padding : 5,display: 'flex', flexDirection: 'row',position : 'relative'}}>            
-              <img src="https://cdn-icons-png.flaticon.com/512/3082/3082011.png" style={{height : 40}} alt="..." />
+              <img src="https://cdn-icons-png.flaticon.com/512/8081/8081347.png" style={{height : 40}} alt="..." />
               <span className="badge rounded-pill bg-primary" style={{position : 'absolute', top : '120', start :'100'}}>
                 {this.props.totalItems}
               </span>

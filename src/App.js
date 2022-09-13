@@ -23,7 +23,10 @@ export default class App extends React.Component{
   async componentDidMount(){
       // The basic configuration of the firebase-db was done only by using the firebase docs, I researched about reading data from firebase db, and integrated the code line by line, and this is the working code, without any error. I will not remember this though, but I do not need to remember just need to read the documentation again.
       
-      db.collection("productsOnWebsite").onSnapshot((querySnapshot) => {      //This is the web version 8 code. Earlier I was using web version 9 code, it was having slight trouble.
+      db.collection("productsOnWebsite")
+      // .where('queryCondition')   //IMPORTANT- I have explained this in the CN React.docs file
+      // .orderBy('sortingTechnique')
+          .onSnapshot((querySnapshot) => {      //This is the web version 8 code. Earlier I was using web version 9 code, it was having slight trouble.
           // Also note that we have removed the .get() method, which was simply a one sided communication tool, when the client requested only then the db data will be fetched, but now it is behaving just like a websocket, where if the db has been altered anyhow, this will be automatically reflected in the front end of each and every client.
           let arr=[];     //Array will be created for each change in the db, but in the setState method only those element will be updated, which are changed acutally.
           querySnapshot.forEach((doc) => {
@@ -61,10 +64,15 @@ export default class App extends React.Component{
   increaseQuantity=(product)=>{
       const {products} = this.state;      //Here we are simply creating a local products variable so that it could be used in the following lines, calling this.state.products[index] feels tiresome.
       let index = products.indexOf(product);
+
+
+      // ******************
+      //These functions are the local variable that are going to be pushed to set the state, but since we have already used the onSnapshot method, which means we do not need to push the changed value of product in the UI, as soon as the db changes, which it will do,since we are deleting an item, the onSnapshot method will run fine. And db and UI will be made to behave in sync.
       products[index].qty+=1;     //This is a local variable being created and updated, and when this array is passed in the setState method only this the state will get updated, before that the State will remain unchanged.
       products[index].totalCost+=products[index].price;
       // console.log(product.id);
 
+      // ******************
 
 
       // We have update the state of this local variable, but we have to update the live data base.
@@ -94,7 +102,7 @@ export default class App extends React.Component{
       let index = products.indexOf(product);
       if(products[index].qty>=1)
       {
-          products[index].qty-=1;
+          products[index].qty-=1;     //These functions are the local variable that are going to be pushed to set the state, but since we have already used the onSnapshot method, which means we do not need to push the changed value of product in the UI, as soon as the db changes, which it will do,since we are deleting an item, the onSnapshot method will run fine. And db and UI will be made to behave in sync.
           products[index].totalCost-=products[index].price;
 
 
@@ -125,7 +133,7 @@ export default class App extends React.Component{
 
   deleteProduct = (product)=>{
       // let confirm =prompt("Confirm Delete?");
-      if(window.confirm('Delete this item from cart?'))
+      if(window.confirm('Delete this item from cart?'))     //Since this app is running in the front end all the console.log method or other method will run only on the client, this is why window is a recognisable object, if this was server, this could have not been possible.
       {
           console.log('inside delete')
           const {products} = this.state;
@@ -146,7 +154,7 @@ export default class App extends React.Component{
               console.error("Error removing document: ", error);
           });
       }      
-      
+
   }
 
 
