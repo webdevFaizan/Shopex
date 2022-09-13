@@ -18,11 +18,11 @@ export default class Cart extends Component{
         
         db.collection("productsOnWebsite").onSnapshot((querySnapshot) => {      //This is the web version 8 code. Earlier I was using web version 9 code, it was having slight trouble.
             // Also note that we have removed the .get() method, which was simply a one sided communication tool, when the client requested only then the db data will be fetched, but now it is behaving just like a websocket, where if the db has been altered anyhow, this will be automatically reflected in the front end of each and every client.
-            let arr=[];
+            let arr=[];     //Array will be created for each change in the db, but in the setState method only those element will be updated, which are changed acutally.
             querySnapshot.forEach((doc) => {
                 let temp = [];
                 temp=doc.data();
-                temp['totalCost']=temp['qty']*temp['price'];
+                temp['totalCost']=temp['qty']*temp['price'];        //We chaned the qty, we updae the totalCost automatically, just a minor bug.
                 temp['id'] = doc.id;        //This will act as a key variable for the list of elements that are to be in the state, just like the children those will have a unique id.
                 arr.push(temp);
             })
@@ -31,7 +31,7 @@ export default class Cart extends Component{
                 products : arr,
                 loading : false
             },()=>{
-                this.trackTotal();
+                this.trackTotal();      //This is to be added inside the second argument of the setState, if we want to see the change in state as soon it is updated. If we keep this method outside the setState's second parameter, then this will give the old state and not the new one.
             })
     })
 }         
