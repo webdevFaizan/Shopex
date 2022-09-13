@@ -63,13 +63,30 @@ export default class App extends React.Component{
       let index = products.indexOf(product);
       products[index].qty+=1;     //This is a local variable being created and updated, and when this array is passed in the setState method only this the state will get updated, before that the State will remain unchanged.
       products[index].totalCost+=products[index].price;
-      this.setState({
-          products : products     //We could have used the short hand property of react as well, when the name of variables on both side is the same, then we do not need to write the right side variable, and still there will be no error.
-      },()=>{
-          let sum =this.trackTotal();
-          console.log(sum);
-          // this.props.trackTotalCounts(number);
-      })
+      // console.log(product.id);
+
+
+
+      // We have update the state of this local variable, but we have to update the live data base.
+            var washingtonRef = db.collection("productsOnWebsite").doc(product.id);            
+            return washingtonRef.update({
+                qty : product.qty,
+                totalCost : product.totalCost
+            })
+            .then(() => {
+                console.log("Document successfully updated!");
+                      this.setState({
+                        products : products     //We could have used the short hand property of react as well, when the name of variables on both side is the same, then we do not need to write the right side variable, and still there will be no error.
+                      },()=>{
+                          let sum =this.trackTotal();
+                          console.log(sum);
+                          // this.props.trackTotalCounts(number);
+                      })
+            })
+            .catch((error) => {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });      
   }
 
   decreaseQuantity=(product)=>{
@@ -79,28 +96,57 @@ export default class App extends React.Component{
       {
           products[index].qty-=1;
           products[index].totalCost-=products[index].price;
-          this.setState({
-              products : products
-          },()=>{                
-              let sum =this.trackTotal();
-              console.log(sum);                
-              // this.props.trackTotalCounts(number);
-          })
+
+
+
+          // We have update the state of this local variable, but we have to update the live data base.
+            var washingtonRef = db.collection("productsOnWebsite").doc(product.id);            
+            return washingtonRef.update({
+                qty : product.qty,
+                totalCost : product.totalCost
+            })
+            .then(() => {
+                console.log("Document successfully updated!");
+                      this.setState({
+                        products : products     //We could have used the short hand property of react as well, when the name of variables on both side is the same, then we do not need to write the right side variable, and still there will be no error.
+                      },()=>{
+                          let sum =this.trackTotal();
+                          console.log(sum);
+                          // this.props.trackTotalCounts(number);
+                      })
+            })
+            .catch((error) => {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
       }
+
   }
 
   deleteProduct = (product)=>{
-      console.log('inside delete')
-      const {products} = this.state;
-      let index = products.indexOf(product);
-      products.splice(index,1);
-      this.setState({
-          products
-      },()=>{                
-          let sum =this.trackTotal();
-          console.log(sum);                
-          // this.props.trackTotalCounts(number);
-      })
+      // let confirm =prompt("Confirm Delete?");
+      if(window.confirm('Delete this item from cart?'))
+      {
+          console.log('inside delete')
+          const {products} = this.state;
+          let index = products.indexOf(product);
+          products.splice(index,1);
+
+          // Deleting from the database -
+          db.collection("productsOnWebsite").doc(product.id).delete().then(() => {
+              console.log("Document successfully deleted!");
+              this.setState({
+                products
+              },()=>{                
+                  let sum =this.trackTotal();
+                  console.log(sum);                
+                  // this.props.trackTotalCounts(number);
+              })
+          }).catch((error) => {
+              console.error("Error removing document: ", error);
+          });
+      }      
+      
   }
 
 

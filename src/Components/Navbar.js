@@ -1,32 +1,29 @@
 import React, { Component } from 'react'
 import './navbar.css'
 
-export default class Navbar extends Component {
-
+export default class Navbar extends Component{
    generateString(length) {
     let result = ' ';
     const charactersLength = 26;
     for ( let i = 0; i < length; i++ ) {
         result += result.charAt(Math.floor(Math.random() * charactersLength)+97);
     }
-
     return result;
   }
 
 
   createItemAndAdd(){
     // const str= this.generateString(10);
-    const str = Math.random().toString(36).substring(2,10);
+    // const str = Math.random().toString(36).substring(2,10);    //We were trying to get the random string, but as we understood later, we do not need to have an id field, as soon as we carate an product, the id is avaialable in the product.id object.
+
     const obj={
         title : 'Leviathan Axe',
         price : 1230,
         totalCost : 0,
         qty : 0,
         img : 'https://cdn-icons-png.flaticon.com/512/2208/2208228.png',
-        id : str  
+        // id : str  
       }
-      // console.log(str);
-
     this.props.addItems(obj);
   }
 
