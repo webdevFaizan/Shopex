@@ -1,31 +1,40 @@
 import React, { Component } from 'react'
 import './cart.css'
 import CartItem from './CartItem'
-import { collection, getDocs } from "firebase/firestore"; 
+// import { collection, getDocs } from "firebase/firestore"; 
 import db from '../firebase-config'     //The firebase config was done in its own separate file, so that we could import the db, this import and export is not available in fire base docs, but once you import anything from any file all the modules required for that import is already completed when that file is run, this is how the import statement would work.
 
 export default class Cart extends Component{
     constructor(){
         super();
         this.state = {          //IMPORTANT : All the states are being managed in one single parent itself, and this.state is always an object, inside this we could contain an array of objects named products. And change we wish to make, will be done by finding the index of the product variable and then changing the states of this products array itself, instead of individually adding the state variable inside the CartItem.js, although reasearch which method is more preferrable in react??
-            products : [ ]
+            products : [ ],
+            loading :true
         }
     }
 
     async componentDidMount(){
         // The basic configuration of the firebase-db was done only by using the firebase docs, I researched about reading data from firebase db, and integrated the code line by line, and this is the working code, without any error. I will not remember this though, but I do not need to remember just need to read the documentation again.
-        const querySnapshot = await getDocs(collection(db, "productsOnWebsite"));
-        let arr=[];
-        querySnapshot.forEach((doc) => {
-            let temp = [];
-            temp=doc.data();
-            temp['id'] = doc.id;
-            arr.push(temp);
-        });
-        this.setState({
-            products : arr
-        })
-    }         
+        
+        db.collection("productsOnWebsite").onSnapshot((querySnapshot) => {      //This is the web version 8 code. Earlier I was using web version 9 code, it was having slight trouble.
+            // Also note that we have removed the .get() method, which was simply a one sided communication tool, when the client requested only then the db data will be fetched, but now it is behaving just like a websocket, where if the db has been altered anyhow, this will be automatically reflected in the front end of each and every client.
+            let arr=[];
+            querySnapshot.forEach((doc) => {
+                let temp = [];
+                temp=doc.data();
+                temp['totalCost']=temp['qty']*temp['price'];
+                temp['id'] = doc.id;        //This will act as a key variable for the list of elements that are to be in the state, just like the children those will have a unique id.
+                arr.push(temp);
+            })
+            console.log(arr);
+            this.setState({
+                products : arr,
+                loading : false
+            },()=>{
+                this.trackTotal();
+            })
+    })
+}         
 
     trackTotal(){
         let sum=0;
@@ -91,8 +100,11 @@ export default class Cart extends Component{
       <>
         <div className="contianer" style={{display : 'flex',alignItems: 'center', justifyContent: 'center'}}> 
             <div style={{maxWidth: '70%',display : 'flex', flexDirection : 'row', flexWrap : 'wrap',alignItems: 'center',border:"0px solid red"}}>
+                {
+                    this.state.loading && <h1>Loading...</h1>
+                }
                 {                
-                    this.state.products.map((element)=>{
+                    !this.state.loading && this.state.products.map((element)=>{
                         return <CartItem key={element.id} product={element} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct}/>
                     })                
                 }            
