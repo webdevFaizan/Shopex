@@ -16,6 +16,7 @@ export default class Cart extends Component{
         let price =parseInt(form.elements['price'].value);
         let qty= parseInt(form.elements['qty'].value);
         let img = form.elements['img'].value;
+        let createdTime = +new Date();
 
         // console.log(title, price, qty, img)
 
@@ -25,6 +26,7 @@ export default class Cart extends Component{
             totalCost : qty*price,
             qty : qty,
             img : img,
+            created: createdTime
           }
         //   console.log(obj);
         this.props.addItems(obj);
@@ -59,7 +61,7 @@ export default class Cart extends Component{
         <div style={{display : 'flex', flexDirection : 'row',alignItems: 'center', justifyContent: 'center'}}> 
             <div style={{maxWidth: '70%',display : 'flex', flexDirection : 'row', flexWrap : 'wrap',alignItems: 'top',border:"0px solid red"}}>
                 {
-                    this.props.loading && <h1>Loading...</h1>
+                    this.props.loading && <h1>Connecting to DB...</h1>
                 }
                 {                
                     !this.props.loading && this.props.products.map((element)=>{

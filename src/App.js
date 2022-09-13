@@ -27,6 +27,7 @@ export default class App extends React.Component{
       db.collection("productsOnWebsite")
       // .where('queryCondition')   //IMPORTANT- I have explained this in the CN React.docs file
       // .orderBy('sortingTechnique')
+          .orderBy('created', 'desc')
           .onSnapshot((querySnapshot) => {      //This is the web version 8 code. Earlier I was using web version 9 code, it was having slight trouble.
           // Also note that we have removed the .get() method, which was simply a one sided communication tool, when the client requested only then the db data will be fetched, but now it is behaving just like a websocket, where if the db has been altered anyhow, this will be automatically reflected in the front end of each and every client.
           let arr=[];     //Array will be created for each change in the db, but in the setState method only those element will be updated, which are changed acutally.
